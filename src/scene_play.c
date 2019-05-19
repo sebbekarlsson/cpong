@@ -90,7 +90,7 @@ void scene_play_tick(scene* self)
 void scene_play_draw(scene* self)
 {
 
-    render_2D_positioned_2D_mesh(640.0f / 2, 0.0f, 16.0f, 480.0f, 255.0f, 255.0f, 255.0f, self->VAO);
+    render_2D_positioned_2D_mesh(640.0f / 2, 0.0f, 16.0f, 480.0f, 255.0f, 255.0f, 255.0f, self->VAO, self->pv);
     
     scene_draw(self);
 }

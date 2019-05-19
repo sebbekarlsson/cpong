@@ -13,5 +13,5 @@ int main(int argc, char* argv[])
     scene_manager_register_scene(SCENE_MANAGER, (scene*) init_scene_menu());
     scene_manager_register_scene(SCENE_MANAGER, (scene*) init_scene_play());
 
-    return coelum_main(argc, argv);
+    return coelum_main(argc, argv, 1);
 }
