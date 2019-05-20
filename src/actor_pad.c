@@ -6,8 +6,8 @@
 #include <time.h>
 
 
-extern scene_manager* SCENE_MANAGER;
-extern keyboard_state* KEYBOARD_STATE;
+extern scene_manager_T* SCENE_MANAGER;
+extern keyboard_state_T* KEYBOARD_STATE;
 
 extern unsigned int SHADER_COLORED;
 
@@ -31,12 +31,12 @@ void actor_pad_key_down_callback(int state)
  * @param float y
  * @param float z
  *
- * @return actor_pad*
+ * @return actor_pad_T*
  */
-actor_pad* init_actor_pad(float x, float y, float z, int player)
+actor_pad_T* init_actor_pad(float x, float y, float z, int player)
 {
-    actor_pad* pad = calloc(1, sizeof(struct ACTOR_PAD_STRUCT));
-    actor* a = (actor*) pad;
+    actor_pad_T* pad = calloc(1, sizeof(struct ACTOR_PAD_STRUCT));
+    actor_T* a = (actor_T*) pad;
 
     actor_constructor(a, x, y, z, actor_pad_tick, actor_pad_draw);
     
@@ -56,31 +56,31 @@ actor_pad* init_actor_pad(float x, float y, float z, int player)
     return pad;
 }
 
-void actor_pad_tick(actor* self)
+void actor_pad_tick(actor_T* self)
 {
     actor_pad_key_up_callback(KEYBOARD_STATE->keys[GLFW_KEY_UP]);
     actor_pad_key_down_callback(KEYBOARD_STATE->keys[GLFW_KEY_DOWN]);
 
-    actor_pad* pad = (actor_pad*) self;
+    actor_pad_T* pad = (actor_pad_T*) self;
 
     if (pad->player)
     {
         if (key_up && self->y > 0)
-            self->y -= ((actor_pad*)self)->speed;
+            self->y -= ((actor_pad_T*)self)->speed;
 
         if (key_down && self->y + self->height < 480.0f)
-            self->y += ((actor_pad*)self)->speed;
+            self->y += ((actor_pad_T*)self)->speed;
     }
     else
     {
-        scene* current_scene = scene_manager_get_current_scene(SCENE_MANAGER);
+        scene_T* current_scene = scene_manager_get_current_scene(SCENE_MANAGER);
 
-        actor* player = (void*) 0;
-        actor* ball = (void*) 0;
+        actor_T* player = (void*) 0;
+        actor_T* ball = (void*) 0;
 
         for (int i = 0; i < current_scene->actors->size; i++)
         {
-            actor* a = (actor*) current_scene->actors->items[i];
+            actor_T* a = (actor_T*) current_scene->actors->items[i];
 
             if (a->type == 0) // ball
             {
@@ -131,7 +131,7 @@ void actor_pad_tick(actor* self)
     }
 }
 
-void actor_pad_draw(actor* self)
+void actor_pad_draw(actor_T* self)
 {
     actor_draw(self);
 }

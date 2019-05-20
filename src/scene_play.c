@@ -6,16 +6,16 @@
 #include <string.h>
 
 
-void scene_play_load(scene* self)
+void scene_play_load(scene_T* self)
 {
-    scene_play* s_play = (scene_play*) self;
+    scene_play_T* s_play = (scene_play_T*) self;
 
     s_play->player_score = 0;
     s_play->computer_score = 0;
 
     for (int i = 0; i < self->actors->size; i++)
     {
-        actor* a = (actor*) self->actors->items[i];
+        actor_T* a = (actor_T*) self->actors->items[i];
 
         if (a->type == 0) // ball
         {
@@ -24,7 +24,7 @@ void scene_play_load(scene* self)
         }
         else if (a->type == 1) // pad
         {
-            actor_pad* pad = (actor_pad*) a;
+            actor_pad_T* pad = (actor_pad_T*) a;
 
             if (pad->player)
             {
@@ -45,12 +45,12 @@ void scene_play_load(scene* self)
 /**
  * Creates a new scene_play
  *
- * @return scene_play*
+ * @return scene_play_T*
  */
-scene_play* init_scene_play()
+scene_play_T* init_scene_play()
 {
-    scene_play* s_play = calloc(1, sizeof(struct SCENE_PLAY_STRUCT));
-    scene* s = (scene*) s_play;
+    scene_play_T* s_play = calloc(1, sizeof(struct SCENE_PLAY_STRUCT));
+    scene_T* s = (scene_T*) s_play;
     scene_constructor(s, scene_play_tick, scene_play_draw);
 
     s_play->player_score = 0;
@@ -70,10 +70,10 @@ scene_play* init_scene_play()
     return s_play;
 }
 
-void scene_play_tick(scene* self)
+void scene_play_tick(scene_T* self)
 {
     scene_tick(self);
-    scene_play* s_play = (scene_play*) self; 
+    scene_play_T* s_play = (scene_play_T*) self; 
 
     sprintf(s_play->text_player_score_buffer, "%d", s_play->player_score);
     s_play->text_player_score->text = s_play->text_player_score_buffer;
@@ -87,10 +87,10 @@ void scene_play_tick(scene* self)
     }
 }
 
-void scene_play_draw(scene* self)
+void scene_play_draw(scene_T* self)
 {
 
-    render_2D_positioned_2D_mesh(640.0f / 2, 0.0f, 16.0f, 480.0f, 255.0f, 255.0f, 255.0f, self->VAO, self->pv);
+    render_2D_positioned_2D_mesh(640.0f / 2, 0.0f, 16.0f, 480.0f, 255.0f, 255.0f, 255.0f, self->VAO, self->camera->projection_view);
     
     scene_draw(self);
 }

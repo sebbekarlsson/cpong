@@ -5,18 +5,18 @@
 
 
 typedef struct SCENE_PLAY_STRUCT {
-    scene base;
+    scene_T base;
     int player_score;
     int computer_score;
-    actor_text* text_player_score;
-    actor_text* text_computer_score;
+    actor_text_T* text_player_score;
+    actor_text_T* text_computer_score;
     char* text_player_score_buffer;
     char* text_computer_score_buffer;
-} scene_play;
+} scene_play_T;
 
-scene_play* init_scene_play();
+scene_play_T* init_scene_play();
 
-void scene_play_tick(scene* self);
+void scene_play_tick(scene_T* self);
 
-void scene_play_draw(scene* self);
+void scene_play_draw(scene_T* self);
 #endif

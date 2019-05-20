@@ -5,15 +5,15 @@
 
 
 typedef struct SCENE_MENU_STRUCT {
-    scene base;
+    scene_T base;
     int button_index;
-    dynamic_list* buttons;
-    dynamic_list* event_listeners;
-} scene_menu;
+    dynamic_list_T* buttons;
+    dynamic_list_T* event_listeners;
+} scene_menu_T;
 
-scene_menu* init_scene_menu();
+scene_menu_T* init_scene_menu();
 
-void scene_menu_tick(scene* self);
+void scene_menu_tick(scene_T* self);
 
-void scene_menu_draw(scene* self);
+void scene_menu_draw(scene_T* self);
 #endif

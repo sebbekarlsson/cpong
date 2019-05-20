@@ -4,19 +4,19 @@
 
 
 typedef struct ACTOR_PAD_STRUCT {
-    actor base;
+    actor_T base;
     float speed;
     int player;
     float target_x;
     float target_y;
     int target_y_error;
     int use_error;
-} actor_pad;
+} actor_pad_T;
 
 
-actor_pad* init_actor_pad(float x, float y, float z, int player);
+actor_pad_T* init_actor_pad(float x, float y, float z, int player);
 
-void actor_pad_tick(actor* self);
+void actor_pad_tick(actor_T* self);
 
-void actor_pad_draw(actor* self);
+void actor_pad_draw(actor_T* self);
 #endif

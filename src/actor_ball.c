@@ -7,11 +7,11 @@
 #include <coelum/utils.h>
 
 
-extern scene_manager* SCENE_MANAGER;
+extern scene_manager_T* SCENE_MANAGER;
 
-void actor_ball_load(actor* self)
+void actor_ball_load(actor_T* self)
 {
-    actor_push(self, ((actor_ball*)self)->target_angle, 10.0f);
+    actor_push(self, ((actor_ball_T*)self)->target_angle, 10.0f);
 }
 
 /**
@@ -21,12 +21,12 @@ void actor_ball_load(actor* self)
  * @param float y
  * @param float z
  *
- * @return actor_ball*
+ * @return actor_ball_T*
  */
-actor_ball* init_actor_ball(float x, float y, float z)
+actor_ball_T* init_actor_ball(float x, float y, float z)
 {
-    actor_ball* ball = calloc(1, sizeof(struct ACTOR_BALL_STRUCT));
-    actor* a = (actor*) ball;
+    actor_ball_T* ball = calloc(1, sizeof(struct ACTOR_BALL_STRUCT));
+    actor_T* a = (actor_T*) ball;
 
     actor_constructor(a, x, y, z, actor_ball_tick, actor_ball_draw);
 
@@ -43,7 +43,7 @@ actor_ball* init_actor_ball(float x, float y, float z)
     return ball;
 }
 
-void actor_ball_tick(actor* self)
+void actor_ball_tick(actor_T* self)
 {
     if (self->dx > 0.0f)
     {
@@ -75,12 +75,12 @@ void actor_ball_tick(actor* self)
             self->dy += self->friction;
     }
 
-    scene* current_scene = scene_manager_get_current_scene(SCENE_MANAGER);
+    scene_T* current_scene = scene_manager_get_current_scene(SCENE_MANAGER);
 
     self->x += self->dx;
     self->y += self->dy;
 
-    actor_ball* ball = (actor_ball*) self;
+    actor_ball_T* ball = (actor_ball_T*) self;
 
     // timer
     if (ball->timer > 0)
@@ -92,7 +92,7 @@ void actor_ball_tick(actor* self)
     {
         for (int i = 0; i < current_scene->actors->size; i++)
         {
-            actor* a = (actor*) current_scene->actors->items[i];
+            actor_T* a = (actor_T*) current_scene->actors->items[i];
 
             if (a->type == 1) // pad
             {
@@ -148,7 +148,7 @@ void actor_ball_tick(actor* self)
 
     if (self->x < 0)
     {
-        scene_play* play_scene = (scene_play*) current_scene;
+        scene_play_T* play_scene = (scene_play_T*) current_scene;
         play_scene->computer_score += 1;
         self->dx = 0.0f;
         self->dy = 0.0f;
@@ -160,7 +160,7 @@ void actor_ball_tick(actor* self)
 
     if (self->x > 640)
     {
-        scene_play* play_scene = (scene_play*) current_scene;
+        scene_play_T* play_scene = (scene_play_T*) current_scene;
         play_scene->player_score += 1;
         self->dx = 0.0f;
         self->dy = 0.0f;
@@ -187,7 +187,7 @@ void actor_ball_tick(actor* self)
     }
 }
 
-void actor_ball_draw(actor* self)
+void actor_ball_draw(actor_T* self)
 {
     actor_draw(self);
 }

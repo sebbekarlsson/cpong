@@ -4,14 +4,14 @@
 #include "include/scene_play.h"
 
 
-extern scene_manager* SCENE_MANAGER;
+extern scene_manager_T* SCENE_MANAGER;
 
 int main(int argc, char* argv[])
 {
     coelum_init();
 
-    scene_manager_register_scene(SCENE_MANAGER, (scene*) init_scene_menu());
-    scene_manager_register_scene(SCENE_MANAGER, (scene*) init_scene_play());
+    scene_manager_register_scene(SCENE_MANAGER, (scene_T*) init_scene_menu());
+    scene_manager_register_scene(SCENE_MANAGER, (scene_T*) init_scene_play());
 
     return coelum_main(argc, argv, 1);
 }

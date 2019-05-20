@@ -5,11 +5,11 @@
 #include <coelum/scene_manager.h>
 
 
-extern scene_manager* SCENE_MANAGER;
-extern keyboard_state* KEYBOARD_STATE;
+extern scene_manager_T* SCENE_MANAGER;
+extern keyboard_state_T* KEYBOARD_STATE;
 extern GLFWwindow* window;
 
-void scene_menu_key_enter_callback(scene_menu* s_menu, int state)
+void scene_menu_key_enter_callback(scene_menu_T* s_menu, int state)
 {
 
     if (state)
@@ -30,7 +30,7 @@ void scene_menu_key_enter_callback(scene_menu* s_menu, int state)
     }
 }
 
-void scene_menu_key_up_callback(scene_menu* s_menu, int state)
+void scene_menu_key_up_callback(scene_menu_T* s_menu, int state)
 {
     if (state)
     {
@@ -39,7 +39,7 @@ void scene_menu_key_up_callback(scene_menu* s_menu, int state)
     }
 }
 
-void scene_menu_key_down_callback(scene_menu* s_menu, int state)
+void scene_menu_key_down_callback(scene_menu_T* s_menu, int state)
 {
     if (state)
     {
@@ -51,20 +51,20 @@ void scene_menu_key_down_callback(scene_menu* s_menu, int state)
 /**
  * Creates a new scene_menu
  *
- * @return scene_menu*
+ * @return scene_menu_T*
  */
-scene_menu* init_scene_menu()
+scene_menu_T* init_scene_menu()
 {
-    scene_menu* s_menu = calloc(1, sizeof(struct SCENE_MENU_STRUCT));
-    scene* s = (scene*) s_menu;
+    scene_menu_T* s_menu = calloc(1, sizeof(struct SCENE_MENU_STRUCT));
+    scene_T* s = (scene_T*) s_menu;
 
     scene_constructor(s, scene_menu_tick, scene_menu_draw);
 
     s_menu->button_index = 0;
     s_menu->buttons = init_dynamic_list(sizeof(struct ACTOR_TEXT_STRUCT));
 
-    actor_text* play_button = init_actor_text((640 / 2) - ((3 * 24) / 2), (480 / 2) - 16, 0.0f, "play", 255, 255, 255);
-    actor_text* quit_button = init_actor_text((640 / 2) - ((3 * 24) / 2), (480 / 2) + 16, 0.0f, "quit", 255, 255, 255);
+    actor_text_T* play_button = init_actor_text((640 / 2) - ((3 * 24) / 2), (480 / 2) - 16, 0.0f, "play", 255, 255, 255);
+    actor_text_T* quit_button = init_actor_text((640 / 2) - ((3 * 24) / 2), (480 / 2) + 16, 0.0f, "quit", 255, 255, 255);
     dynamic_list_append(s->actors, play_button);
     dynamic_list_append(s_menu->buttons, play_button);
     dynamic_list_append(s->actors, quit_button);
@@ -73,11 +73,11 @@ scene_menu* init_scene_menu()
     return s_menu;
 }
 
-void scene_menu_tick(scene* self)
+void scene_menu_tick(scene_T* self)
 {
     scene_tick(self); 
 
-    scene_menu* s_menu = (scene_menu*) self;
+    scene_menu_T* s_menu = (scene_menu_T*) self;
 
     scene_menu_key_up_callback(s_menu, KEYBOARD_STATE->keys[GLFW_KEY_UP]);
     scene_menu_key_down_callback(s_menu, KEYBOARD_STATE->keys[GLFW_KEY_DOWN]);
@@ -85,7 +85,7 @@ void scene_menu_tick(scene* self)
 
     for (int i = 0; i < s_menu->buttons->size; i++)
     {
-        actor_text* a_t = (actor_text*) s_menu->buttons->items[i];
+        actor_text_T* a_t = (actor_text_T*) s_menu->buttons->items[i];
 
         if (s_menu->button_index == i)
         {
@@ -102,7 +102,7 @@ void scene_menu_tick(scene* self)
     }
 }
 
-void scene_menu_draw(scene* self)
+void scene_menu_draw(scene_T* self)
 {
     scene_draw(self);
 }
