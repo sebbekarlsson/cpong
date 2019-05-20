@@ -1,5 +1,6 @@
 #include "include/scene_menu.h"
 #include "include/actor_pad.h"
+#include <coelum/constants.h>
 #include <coelum/actor_text.h>
 #include <coelum/input.h>
 #include <coelum/scene_manager.h>
@@ -63,8 +64,8 @@ scene_menu_T* init_scene_menu()
     s_menu->button_index = 0;
     s_menu->buttons = init_dynamic_list(sizeof(struct ACTOR_TEXT_STRUCT));
 
-    actor_text_T* play_button = init_actor_text((640 / 2) - ((3 * 24) / 2), (480 / 2) - 16, 0.0f, "play", 255, 255, 255);
-    actor_text_T* quit_button = init_actor_text((640 / 2) - ((3 * 24) / 2), (480 / 2) + 16, 0.0f, "quit", 255, 255, 255);
+    actor_text_T* play_button = init_actor_text((WINDOW_WIDTH / 2) - ((3 * 24) / 2), (WINDOW_HEIGHT / 2) - 16, 0.0f, "play", 255, 255, 255);
+    actor_text_T* quit_button = init_actor_text((WINDOW_WIDTH / 2) - ((3 * 24) / 2), (WINDOW_HEIGHT / 2) + 16, 0.0f, "quit", 255, 255, 255);
     dynamic_list_append(s->actors, play_button);
     dynamic_list_append(s_menu->buttons, play_button);
     dynamic_list_append(s->actors, quit_button);

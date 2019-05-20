@@ -1,4 +1,5 @@
 #include "include/actor_pad.h"
+#include <coelum/constants.h>
 #include <coelum/input.h>
 #include <coelum/textures.h>
 #include <coelum/scene_manager.h>
@@ -48,7 +49,7 @@ actor_pad_T* init_actor_pad(float x, float y, float z, int player)
 
     pad->player = player;
     pad->speed = 4.5f;
-    pad->target_x = 640 / 2;
+    pad->target_x = WINDOW_WIDTH / 2;
     pad->target_y = y;
     pad->target_y_error = 0.0f;
     pad->use_error = 0;
@@ -68,7 +69,7 @@ void actor_pad_tick(actor_T* self)
         if (key_up && self->y > 0)
             self->y -= ((actor_pad_T*)self)->speed;
 
-        if (key_down && self->y + self->height < 480.0f)
+        if (key_down && self->y + self->height < WINDOW_HEIGHT)
             self->y += ((actor_pad_T*)self)->speed;
     }
     else
@@ -97,7 +98,7 @@ void actor_pad_tick(actor_T* self)
         
         int chance = 32;
 
-        if (ball->x < 640 / 2)
+        if (ball->x < WINDOW_WIDTH / 2)
             chance -= 8;
 
         if (pad->use_error)
@@ -116,7 +117,7 @@ void actor_pad_tick(actor_T* self)
 
         if (random_int(0, 8) == 0)
         {
-            pad->target_y_error = random_int(-480, 480);
+            pad->target_y_error = random_int(-WINDOW_HEIGHT, WINDOW_HEIGHT);
         }
 
         if (self->y < pad->target_y)

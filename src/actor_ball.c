@@ -1,4 +1,5 @@
 #include "include/actor_ball.h"
+#include <coelum/constants.h>
 #include <coelum/input.h>
 #include <coelum/textures.h>
 #include <coelum/scene_manager.h>
@@ -88,7 +89,7 @@ void actor_ball_tick(actor_T* self)
         ball->timer -= 1.0f;
     }
 
-    current_scene->camera->x = self->x - 640.0f / 2;
+    current_scene->camera->x = self->x - WINDOW_WIDTH / 2;
 
     if (!ball->timer)
     {
@@ -160,7 +161,7 @@ void actor_ball_tick(actor_T* self)
         play_sound_threaded(300.0f, 1.0f);
     }
 
-    if (self->x > 640)
+    if (self->x > WINDOW_WIDTH)
     {
         scene_play_T* play_scene = (scene_play_T*) current_scene;
         play_scene->player_score += 1;
