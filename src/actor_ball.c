@@ -88,6 +88,8 @@ void actor_ball_tick(actor_T* self)
         ball->timer -= 1.0f;
     }
 
+    current_scene->camera->x = self->x - 640.0f / 2;
+
     if (!ball->timer)
     {
         for (int i = 0; i < current_scene->actors->size; i++)

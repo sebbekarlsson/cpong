@@ -75,7 +75,7 @@ scene_menu_T* init_scene_menu()
 
 void scene_menu_tick(scene_T* self)
 {
-    scene_tick(self); 
+    scene_tick(self);
 
     scene_menu_T* s_menu = (scene_menu_T*) self;
 

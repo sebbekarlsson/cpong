@@ -90,7 +90,9 @@ void scene_play_tick(scene_T* self)
 void scene_play_draw(scene_T* self)
 {
 
+    camera_bind(self->camera);
     render_2D_positioned_2D_mesh(640.0f / 2, 0.0f, 16.0f, 480.0f, 255.0f, 255.0f, 255.0f, self->VAO, self->camera->projection_view);
+    camera_unbind(self->camera);
     
     scene_draw(self);
 }
