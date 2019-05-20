@@ -54,6 +54,10 @@ scene_play_T* init_scene_play()
     scene_T* s = (scene_T*) s_play;
     scene_constructor(s, scene_play_tick, scene_play_draw);
 
+    s->bg_r = 0.0f;
+    s->bg_g = 0.0f;
+    s->bg_b = 0.0f;
+
     s_play->player_score = 0;
     s_play->computer_score = 0;
     s_play->text_player_score = init_actor_text((WINDOW_WIDTH / 2) - 120.0f, 64.0f, 0.0f, "0", 255, 255, 255);

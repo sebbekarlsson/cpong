@@ -61,6 +61,10 @@ scene_menu_T* init_scene_menu()
 
     scene_constructor(s, scene_menu_tick, scene_menu_draw);
 
+    s->bg_r = 48.0f;
+    s->bg_g = 48.0f;
+    s->bg_b = 48.0f;
+
     s_menu->button_index = 0;
     s_menu->buttons = init_dynamic_list(sizeof(struct ACTOR_TEXT_STRUCT));
 
