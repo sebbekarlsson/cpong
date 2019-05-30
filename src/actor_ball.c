@@ -6,9 +6,11 @@
 #include "include/scene_play.h"
 #include <coelum/sound.h>
 #include <coelum/utils.h>
+#include <coelum/theatre.h>
+#include <string.h>
 
 
-extern scene_manager_T* SCENE_MANAGER;
+extern theatre_T* THEATRE;
 
 void actor_ball_load(actor_T* self)
 {
@@ -29,10 +31,9 @@ actor_ball_T* init_actor_ball(float x, float y, float z)
     actor_ball_T* ball = calloc(1, sizeof(struct ACTOR_BALL_STRUCT));
     actor_T* a = (actor_T*) ball;
 
-    actor_constructor(a, x, y, z, actor_ball_tick, actor_ball_draw);
+    actor_constructor(a, x, y, z, actor_ball_tick, actor_ball_draw, "ball");
 
     a->load = actor_ball_load;
-    a->type = 0;
     a->width = 16;
     a->height = 16;
     a->friction = 0.01f;
@@ -76,7 +77,7 @@ void actor_ball_tick(actor_T* self)
             self->dy += self->friction;
     }
 
-    scene_T* current_scene = scene_manager_get_current_scene(SCENE_MANAGER);
+    scene_T* current_scene = scene_manager_get_current_scene(THEATRE->scene_manager);
 
     self->x += self->dx;
     self->y += self->dy;
@@ -89,15 +90,17 @@ void actor_ball_tick(actor_T* self)
         ball->timer -= 1.0f;
     }
 
-    current_scene->camera->x = self->x - WINDOW_WIDTH / 2;
+    state_T* state = (state_T*) current_scene;
+
+    state->camera->x = self->x - WINDOW_WIDTH / 2;
 
     if (!ball->timer)
     {
-        for (int i = 0; i < current_scene->actors->size; i++)
+        for (int i = 0; i < state->actors->size; i++)
         {
-            actor_T* a = (actor_T*) current_scene->actors->items[i];
+            actor_T* a = (actor_T*) state->actors->items[i];
 
-            if (a->type == 1) // pad
+            if (strcmp(a->type_name, "pad") == 0) // pad
             {
                 if (self->x + self->width > a->x && self->x < a->x + a->width)
                 {
@@ -142,7 +145,7 @@ void actor_ball_tick(actor_T* self)
                         
                         actor_push(self, ball->target_angle, 10.5f);
 
-                        play_sound_threaded(140.0, 1.0f);
+                        play_sound_threaded(140.0, 1.0f, THEATRE->al);
                     }
                 }
             }
@@ -158,7 +161,7 @@ void actor_ball_tick(actor_T* self)
         ball->target_angle -= 180.0f;
         actor_push(self, ball->target_angle, 10.0f);
         ball->timer = 10.0f;
-        play_sound_threaded(300.0f, 1.0f);
+        play_sound_threaded(300.0f, 1.0f, THEATRE->al);
     }
 
     if (self->x > WINDOW_WIDTH)
@@ -170,7 +173,7 @@ void actor_ball_tick(actor_T* self)
         ball->target_angle -= 180.0f;
         actor_push(self, ball->target_angle, 10.0f);
         ball->timer = 10.0f;
-        play_sound_threaded(600.0f, 1.0f);
+        play_sound_threaded(600.0f, 1.0f, THEATRE->al);
     }
 
     if (self->y <= 0) // we hit the top wall

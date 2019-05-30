@@ -2,12 +2,13 @@
 #include <coelum/constants.h>
 #include <coelum/input.h>
 #include <coelum/textures.h>
-#include <coelum/scene_manager.h>
+#include <coelum/theatre.h>
 #include <coelum/utils.h>
 #include <time.h>
+#include <string.h>
 
 
-extern scene_manager_T* SCENE_MANAGER;
+extern theatre_T* THEATRE;
 extern keyboard_state_T* KEYBOARD_STATE;
 
 extern unsigned int SHADER_COLORED;
@@ -39,10 +40,8 @@ actor_pad_T* init_actor_pad(float x, float y, float z, int player)
     actor_pad_T* pad = calloc(1, sizeof(struct ACTOR_PAD_STRUCT));
     actor_T* a = (actor_T*) pad;
 
-    actor_constructor(a, x, y, z, actor_pad_tick, actor_pad_draw);
+    actor_constructor(a, x, y, z, actor_pad_tick, actor_pad_draw, "pad");
     
-    a->type = 1;
-
     a->shader_program = SHADER_COLORED;
     a->width = 16;
     a->height = 48;
@@ -74,21 +73,22 @@ void actor_pad_tick(actor_T* self)
     }
     else
     {
-        scene_T* current_scene = scene_manager_get_current_scene(SCENE_MANAGER);
+        scene_T* current_scene = scene_manager_get_current_scene(THEATRE->scene_manager);
+        state_T* state = (state_T*) current_scene;
 
         actor_T* player = (void*) 0;
         actor_T* ball = (void*) 0;
 
-        for (int i = 0; i < current_scene->actors->size; i++)
+        for (int i = 0; i < state->actors->size; i++)
         {
-            actor_T* a = (actor_T*) current_scene->actors->items[i];
+            actor_T* a = (actor_T*) state->actors->items[i];
 
-            if (a->type == 0) // ball
+            if (strcmp(a->type_name, "ball") == 0) // ball
             {
                 ball = a;
             }
             else
-            if (a->type == 1 && a != self)
+            if (strcmp(a->type_name, "pad") == 0 && a != self)
             {
                 player = a;
             }

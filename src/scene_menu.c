@@ -3,10 +3,10 @@
 #include <coelum/constants.h>
 #include <coelum/actor_text.h>
 #include <coelum/input.h>
-#include <coelum/scene_manager.h>
+#include <coelum/theatre.h>
 
 
-extern scene_manager_T* SCENE_MANAGER;
+extern theatre_T* THEATRE;
 extern keyboard_state_T* KEYBOARD_STATE;
 extern GLFWwindow* window;
 
@@ -20,7 +20,7 @@ void scene_menu_key_enter_callback(scene_menu_T* s_menu, int state)
             case 0:
                 // "play" button
                 
-                scene_manager_next(SCENE_MANAGER);
+                scene_manager_next(THEATRE->scene_manager);
             break;
             case 1:
                 // "quit" button
@@ -67,19 +67,22 @@ scene_menu_T* init_scene_menu()
 
     s_menu->button_index = 0;
     s_menu->buttons = init_dynamic_list(sizeof(struct ACTOR_TEXT_STRUCT));
+    state_T* state = (state_T*) s_menu;
 
-    actor_text_T* play_button = init_actor_text((WINDOW_WIDTH / 2) - ((3 * 24) / 2), (WINDOW_HEIGHT / 2) - 16, 0.0f, "play", 255, 255, 255);
-    actor_text_T* quit_button = init_actor_text((WINDOW_WIDTH / 2) - ((3 * 24) / 2), (WINDOW_HEIGHT / 2) + 16, 0.0f, "quit", 255, 255, 255);
-    dynamic_list_append(s->actors, play_button);
+    actor_text_T* play_button = init_actor_text((WINDOW_WIDTH / 2) - ((3 * (24 + 32)) / 2), (WINDOW_HEIGHT / 2) - 42, 0.0f, "play", 255, 255, 255, 24, 32);
+    actor_text_T* quit_button = init_actor_text((WINDOW_WIDTH / 2) - ((3 * (24 + 32)) / 2), (WINDOW_HEIGHT / 2) + 42, 0.0f, "quit", 255, 255, 255, 24, 32);
+    dynamic_list_append(state->actors, play_button);
     dynamic_list_append(s_menu->buttons, play_button);
-    dynamic_list_append(s->actors, quit_button);
+    dynamic_list_append(state->actors, quit_button);
     dynamic_list_append(s_menu->buttons, quit_button);
 
     return s_menu;
 }
 
-void scene_menu_tick(scene_T* self)
+void scene_menu_tick(state_T* state)
 {
+    scene_T* self = (scene_T*) state;
+
     scene_tick(self);
 
     scene_menu_T* s_menu = (scene_menu_T*) self;
@@ -107,7 +110,7 @@ void scene_menu_tick(scene_T* self)
     }
 }
 
-void scene_menu_draw(scene_T* self)
+void scene_menu_draw(state_T* state)
 {
-    scene_draw(self);
+    scene_draw((scene_T*) state);
 }

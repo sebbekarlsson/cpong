@@ -13,7 +13,7 @@ typedef struct SCENE_MENU_STRUCT {
 
 scene_menu_T* init_scene_menu();
 
-void scene_menu_tick(scene_T* self);
+void scene_menu_tick(state_T* self);
 
-void scene_menu_draw(scene_T* self);
+void scene_menu_draw(state_T* self);
 #endif
