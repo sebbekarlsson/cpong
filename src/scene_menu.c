@@ -59,7 +59,7 @@ scene_menu_T* init_scene_menu()
     scene_menu_T* s_menu = calloc(1, sizeof(struct SCENE_MENU_STRUCT));
     scene_T* s = (scene_T*) s_menu;
 
-    scene_constructor(s, scene_menu_tick, scene_menu_draw);
+    scene_constructor(s, scene_menu_tick, scene_menu_draw, 2);
 
     s->bg_r = 48.0f;
     s->bg_g = 48.0f;
@@ -79,11 +79,9 @@ scene_menu_T* init_scene_menu()
     return s_menu;
 }
 
-void scene_menu_tick(state_T* state)
+void scene_menu_tick(scene_T* self)
 {
-    scene_T* self = (scene_T*) state;
-
-    scene_tick(self);
+    // scene_tick(self);
 
     scene_menu_T* s_menu = (scene_menu_T*) self;
 
@@ -110,7 +108,7 @@ void scene_menu_tick(state_T* state)
     }
 }
 
-void scene_menu_draw(state_T* state)
+void scene_menu_draw(scene_T* self)
 {
-    scene_draw((scene_T*) state);
+    //scene_draw(self);
 }

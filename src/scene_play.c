@@ -53,7 +53,7 @@ scene_play_T* init_scene_play()
 {
     scene_play_T* s_play = calloc(1, sizeof(struct SCENE_PLAY_STRUCT));
     scene_T* s = (scene_T*) s_play;
-    scene_constructor(s, scene_play_tick, scene_play_draw);
+    scene_constructor(s, scene_play_tick, scene_play_draw, 2);
 
     s->bg_r = 0.0f;
     s->bg_g = 0.0f;
@@ -78,10 +78,8 @@ scene_play_T* init_scene_play()
     return s_play;
 }
 
-void scene_play_tick(state_T* state)
+void scene_play_tick(scene_T* self)
 {
-    scene_T* self = (scene_T*) state;
-
     scene_tick(self);
     scene_play_T* s_play = (scene_play_T*) self; 
 
@@ -97,13 +95,12 @@ void scene_play_tick(state_T* state)
     }
 }
 
-void scene_play_draw(state_T* state)
+void scene_play_draw(scene_T* self)
 {
-
-    scene_T* self = (scene_T*) state;
+    state_T* state = (state_T*) self;
 
     camera_bind(state->camera);
-    draw_2D_positioned_2D_mesh(WINDOW_WIDTH / 2, 0.0f, 16.0f, WINDOW_HEIGHT, 255.0f, 255.0f, 255.0f, state);
+    draw_positioned_2D_mesh(WINDOW_WIDTH / 2, 0.0f, 0.0f, 16.0f, WINDOW_HEIGHT, 255.0f, 255.0f, 255.0f, state);
     camera_unbind(state->camera);
     
     scene_draw(self);

@@ -16,7 +16,7 @@ typedef struct SCENE_PLAY_STRUCT {
 
 scene_play_T* init_scene_play();
 
-void scene_play_tick(state_T* state);
+void scene_play_tick(scene_T* state);
 
-void scene_play_draw(state_T* state);
+void scene_play_draw(scene_T* state);
 #endif
