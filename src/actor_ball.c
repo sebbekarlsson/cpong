@@ -37,7 +37,7 @@ actor_ball_T* init_actor_ball(float x, float y, float z)
     a->width = 16;
     a->height = 16;
     a->friction = 0.01f;
-    a->texture = get_texture("res/img/redball.png", GL_RGBA)->renderable_texture;
+    a->sprite = init_sprite_from_file("res/img/redball.png", GL_RGBA, 1.0f, a->width, a->height);
 
     ball->target_angle = 0.0f;
     ball->timer = 0.0f;
