@@ -69,8 +69,8 @@ scene_menu_T* init_scene_menu()
     s_menu->buttons = init_dynamic_list(sizeof(struct ACTOR_TEXT_STRUCT));
     state_T* state = (state_T*) s_menu;
 
-    actor_text_T* play_button = init_actor_text((WINDOW_WIDTH / 2) - ((3 * (24 + 32)) / 2), (WINDOW_HEIGHT / 2) - 42, 0.0f, "play", 255, 255, 255, 24, 32);
-    actor_text_T* quit_button = init_actor_text((WINDOW_WIDTH / 2) - ((3 * (24 + 32)) / 2), (WINDOW_HEIGHT / 2) + 42, 0.0f, "quit", 255, 255, 255, 24, 32);
+    actor_text_T* play_button = init_actor_text((WINDOW_WIDTH / 2) - ((3 * (24 + 32)) / 2), (WINDOW_HEIGHT / 2) - 42, 0.0f, "Play", 255, 255, 255, 24, 32);
+    actor_text_T* quit_button = init_actor_text((WINDOW_WIDTH / 2) - ((3 * (24 + 32)) / 2), (WINDOW_HEIGHT / 2) + 42, 0.0f, "Quit", 255, 255, 255, 24, 32);
     dynamic_list_append(state->actors, play_button);
     dynamic_list_append(s_menu->buttons, play_button);
     dynamic_list_append(state->actors, quit_button);
