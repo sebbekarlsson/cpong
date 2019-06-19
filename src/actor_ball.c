@@ -7,6 +7,7 @@
 #include <coelum/sound.h>
 #include <coelum/utils.h>
 #include <coelum/theatre.h>
+#include <coelum/physics.h>
 #include <string.h>
 
 
@@ -14,7 +15,7 @@ extern theatre_T* THEATRE;
 
 void actor_ball_load(actor_T* self)
 {
-    actor_push(self, ((actor_ball_T*)self)->target_angle, 10.0f);
+    physics_vec2_push(&self->dx, &self->dy, ((actor_ball_T*)self)->target_angle, 10.0f);
 }
 
 /**
@@ -47,40 +48,9 @@ actor_ball_T* init_actor_ball(float x, float y, float z)
 
 void actor_ball_tick(actor_T* self)
 {
-    if (self->dx > 0.0f)
-    {
-        if (self->dx - self->friction < 0.0f)
-            self->dx = 0.0f;
-        else
-            self->dx -= self->friction;
-    }
-    else if (self->dx < 0.0f)
-    {
-        if (self->dx + self->friction > 0.0f)
-            self->dx = 0.0f;
-        else
-            self->dx += self->friction;
-    }
-
-    if (self->dy > 0.0f)
-    {
-        if (self->dy - self->friction < 0.0f)
-            self->dy = 0.0f;
-        else
-            self->dy -= self->friction;
-    }
-    else if (self->dy < 0.0f)
-    {
-        if (self->dy + self->friction > 0.0f)
-            self->dy = 0.0f;
-        else
-            self->dy += self->friction;
-    }
+    physics_tick_actor(self);
 
     scene_T* current_scene = scene_manager_get_current_scene(THEATRE->scene_manager);
-
-    self->x += self->dx;
-    self->y += self->dy;
 
     actor_ball_T* ball = (actor_ball_T*) self;
 
@@ -143,7 +113,7 @@ void actor_ball_tick(actor_T* self)
                             }
                         }
                         
-                        actor_push(self, ball->target_angle, 10.5f);
+                        physics_vec2_push(&self->dx, &self->dy, ball->target_angle, 10.5f);
 
                         play_sound_threaded(140.0, 1.0f, THEATRE->al);
                     }
@@ -159,7 +129,9 @@ void actor_ball_tick(actor_T* self)
         self->dx = 0.0f;
         self->dy = 0.0f;
         ball->target_angle -= 180.0f;
-        actor_push(self, ball->target_angle, 10.0f);
+
+        physics_vec2_push(&self->dx, &self->dy, ball->target_angle, 10.0f);
+
         ball->timer = 10.0f;
         play_sound_threaded(300.0f, 1.0f, THEATRE->al);
     }
@@ -171,7 +143,7 @@ void actor_ball_tick(actor_T* self)
         self->dx = 0.0f;
         self->dy = 0.0f;
         ball->target_angle -= 180.0f;
-        actor_push(self, ball->target_angle, 10.0f);
+        physics_vec2_push(&self->dx, &self->dy, ball->target_angle, 10.0f);
         ball->timer = 10.0f;
         play_sound_threaded(600.0f, 1.0f, THEATRE->al);
     }
@@ -181,7 +153,7 @@ void actor_ball_tick(actor_T* self)
         self->dx = 0.0f;
         self->dy = 0.0f;
         ball->target_angle -= 180.0f;
-        actor_push(self, ball->target_angle, 10.5f);
+        physics_vec2_push(&self->dx, &self->dy, ball->target_angle, 10.0f);
     }
 
     if (self->y >= 480.0f) // we hit the bottom wall
@@ -189,7 +161,7 @@ void actor_ball_tick(actor_T* self)
         self->dx = 0.0f;
         self->dy = 0.0f;
         ball->target_angle -= 180.0f;
-        actor_push(self, ball->target_angle, 10.5f);
+        physics_vec2_push(&self->dx, &self->dy, ball->target_angle, 10.0f);
     }
 }
 
