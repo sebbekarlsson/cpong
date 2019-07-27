@@ -62,7 +62,7 @@ void actor_ball_tick(actor_T* self)
 
     state_T* state = (state_T*) current_scene;
 
-    state->camera->x = self->x - WINDOW_WIDTH / 2;
+    // state->camera->x = self->x - WINDOW_WIDTH / 2;
 
     if (!ball->timer)
     {

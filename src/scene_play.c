@@ -100,7 +100,7 @@ void scene_play_draw(scene_T* self)
     state_T* state = (state_T*) self;
 
     camera_bind(state->camera);
-    draw_positioned_2D_mesh(WINDOW_WIDTH / 2, 0.0f, 0.0f, 16.0f, WINDOW_HEIGHT, 255.0f, 255.0f, 255.0f, state);
+    draw_positioned_2D_mesh(WINDOW_WIDTH / 2, 0.0f, 0.0f, 16.0f, WINDOW_HEIGHT, 255.0f, 255.0f, 255.0f, 1.0f, state);
     camera_unbind(state->camera);
     
     scene_draw(self);
